@@ -2351,3 +2351,57 @@ if ('serviceWorker' in navigator) {
 // Export for debugging
 window.soulCommander = soulCommanderGame;
 window.game = soulCommanderGame;
+
+// ===== FULLSCREEN SCROLL MANAGER =====
+// Paste di BAWAH SEMUA code JavaScript, sebelum </script>
+
+function setupScrollFix() {
+    const container = document.querySelector('.game-container');
+    if (!container) return;
+    
+    // 1. Force scrollable di mobile
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        container.classList.add('scrollable');
+        container.style.overflowY = 'auto';
+        document.body.style.overflowY = 'auto';
+    }
+    
+    // 2. Handle fullscreen changes
+    const fullscreenEvents = [
+        'fullscreenchange',
+        'webkitfullscreenchange',
+        'mozfullscreenchange',
+        'MSFullscreenChange'
+    ];
+    
+    fullscreenEvents.forEach(event => {
+        document.addEventListener(event, () => {
+            setTimeout(() => {
+                const isFullscreen = !!(document.fullscreenElement || 
+                                       document.webkitFullscreenElement ||
+                                       document.mozFullScreenElement ||
+                                       document.msFullscreenElement);
+                
+                if (isFullscreen) {
+                    // Fullscreen: enable scroll
+                    container.style.overflowY = 'auto';
+                    container.style.height = '100vh';
+                    document.body.style.overflow = 'auto';
+                } else {
+                    // Normal: tetap scrollable terutama di mobile
+                    if (/Mobi|Android/i.test(navigator.userAgent)) {
+                        container.style.overflowY = 'auto';
+                    }
+                }
+            }, 100);
+        });
+    });
+    
+    // 3. Force scrollable setelah load
+    setTimeout(() => {
+        container.style.overflowY = 'auto';
+    }, 2000);
+}
+
+// Panggil fungsi ini di init()
+setupScrollFix();
