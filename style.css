@@ -1527,3 +1527,43 @@ body {
         height: auto;
     }
 }
+
+/* ===== FULLSCREEN SCROLL FIX ===== */
+/* Paste di BAWAH SEMUA code CSS yang lain */
+
+/* Enable scrolling untuk semua keadaan */
+html, body {
+    overflow-y: auto !important;
+    height: 100% !important;
+}
+
+/* Game container utama */
+.game-container {
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* Mobile-specific: selalu scrollable */
+@media (max-width: 768px) {
+    .game-container {
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow-y: auto !important;
+    }
+}
+
+/* Fullscreen override dengan HIGH specificity */
+:fullscreen .game-container,
+:-webkit-full-screen .game-container,
+:-moz-full-screen .game-container,
+:-ms-fullscreen .game-container {
+    overflow-y: auto !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+}
+
+/* JavaScript fallback class */
+.game-container.scrollable {
+    overflow-y: auto !important;
+}
