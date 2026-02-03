@@ -1,0 +1,628 @@
+/* =========================================== */
+/* SOUL COMMANDER v2.0 - RESPONSIVE FIXES     */
+/* Mobile First • Better Scrolling • Fixed Layout */
+/* =========================================== */
+
+/* CSS Reset & Variables */
+:root {
+    /* Soul Commander Color Palette */
+    --primary-purple: #6C5CE7;
+    --primary-dark: #5B4FD8;
+    --primary-light: #8B7BFF;
+    
+    --secondary-teal: #00CEC9;
+    --secondary-dark: #00B894;
+    
+    --accent-red: #FF7675;
+    --accent-blue: #74B9FF;
+    --accent-yellow: #FFEAA7;
+    --accent-green: #55EFC4;
+    --accent-pink: #FD79A8;
+    
+    /* Theme Colors */
+    --bg-dark: #0F1123;
+    --bg-darker: #0A0B18;
+    --bg-panel: #1A1C35;
+    --bg-card: #25284A;
+    --bg-input: #2D3158;
+    
+    /* Text Colors */
+    --text-primary: #FFFFFF;
+    --text-secondary: #B8B8D1;
+    --text-muted: #7A7CA0;
+    --text-highlight: #FFEAA7;
+    
+    /* UI Colors */
+    --border-color: #3D4070;
+    --shadow-color: rgba(108, 92, 231, 0.3);
+    --overlay-color: rgba(10, 11, 24, 0.9);
+    
+    /* Sizes */
+    --header-height: 60px;
+    --footer-height: 45px;
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --border-radius-lg: 16px;
+    
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 24px;
+    
+    /* Animations */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.4s ease;
+    
+    /* Glow Effects */
+    --glow-purple: 0 0 15px var(--primary-purple);
+    --glow-teal: 0 0 15px var(--secondary-teal);
+    --glow-red: 0 0 15px var(--accent-red);
+    --glow-blue: 0 0 15px var(--accent-blue);
+    --glow-yellow: 0 0 15px var(--accent-yellow);
+}
+
+/* Dark Theme (Default) */
+[data-theme="light"] {
+    --bg-dark: #F5F7FF;
+    --bg-darker: #E8ECFF;
+    --bg-panel: #FFFFFF;
+    --bg-card: #F0F3FF;
+    --bg-input: #FFFFFF;
+    
+    --text-primary: #1A1C35;
+    --text-secondary: #4A4C6D;
+    --text-muted: #7A7CA0;
+    --text-highlight: #6C5CE7;
+    
+    --border-color: #D1D6FF;
+    --shadow-color: rgba(108, 92, 231, 0.1);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Roboto Mono', 'Segoe UI', monospace;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    touch-action: manipulation;
+}
+
+/* === UTAMA: GAME CONTAINER LAYOUT BARU === */
+
+/* Mobile Layout - Vertical Scroll */
+@media (max-width: 767px) {
+    body {
+        padding: 0;
+        height: 100vh;
+        height: 100dvh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .game-container {
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-panel);
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+        position: relative;
+        padding-bottom: var(--footer-height);
+    }
+    
+    /* Game Area - Mobile Vertical Layout */
+    .game-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        gap: 8px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: auto;
+        min-height: calc(100dvh - var(--header-height) - var(--footer-height));
+    }
+    
+    /* Soul Chronicle - Scrollable Container di Mobile */
+    .game-log-section {
+        flex: none;
+        height: 300px;
+        min-height: 300px;
+        max-height: 400px;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-card);
+        border-radius: var(--border-radius);
+        padding: 12px;
+        border: 2px solid var(--accent-blue);
+        box-shadow: var(--glow-blue);
+        overflow: hidden;
+    }
+    
+    .log-container {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        min-height: 200px;
+        max-height: none;
+    }
+    
+    /* Character & Equipment - Auto Height */
+    .character-section,
+    .equipment-section {
+        flex: none;
+        height: auto;
+        min-height: auto;
+    }
+    
+    /* Command Section - Fixed Height */
+    .command-section {
+        flex: none;
+        height: 220px;
+        min-height: 220px;
+    }
+    
+    /* Quest Section - Auto Height */
+    .quest-section {
+        flex: none;
+        height: auto;
+        min-height: 120px;
+    }
+    
+    /* Equipment Grid - 3x2 Layout */
+    .equipment-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
+    /* Character Display - Row Layout */
+    .character-display {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 16px;
+    }
+    
+    #characterCanvas {
+        width: 80px;
+        height: 80px;
+    }
+    
+    /* Hide some elements on mobile */
+    .online-status,
+    .game-version,
+    .footer-center {
+        display: none;
+    }
+    
+    /* Better touch targets */
+    .command-chip,
+    .equip-slot,
+    .log-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Mobile-optimized input */
+    .command-input {
+        font-size: 16px;
+        min-height: 48px;
+    }
+    
+    /* Mobile scroll hint */
+    .mobile-scroll-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: var(--text-muted);
+        background: rgba(108, 92, 231, 0.1);
+        padding: 6px 10px;
+        border-radius: 12px;
+        margin-top: 8px;
+        justify-content: center;
+    }
+    
+    .mobile-scroll-hint::before {
+        content: "↑↓";
+        font-size: 14px;
+        animation: bounce 1s infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+    }
+}
+
+/* Desktop Layout - Horizontal */
+@media (min-width: 768px) {
+    body {
+        padding: 8px;
+        height: 100vh;
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(0, 206, 201, 0.1) 0%, transparent 20%);
+    }
+    
+    .game-container {
+        width: 100%;
+        max-width: 1200px;
+        height: calc(100vh - 16px);
+        height: calc(100dvh - 16px);
+        max-height: 900px;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-panel);
+        border-radius: var(--border-radius-lg);
+        border: 2px solid var(--border-color);
+        box-shadow: var(--glow-purple);
+        overflow: hidden;
+    }
+    
+    /* Game Area - Desktop Horizontal Layout */
+    .game-area {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        padding: 12px;
+        gap: 12px;
+        overflow: hidden;
+        min-height: 0;
+    }
+    
+    /* Left Column */
+    .left-column {
+        width: 35%;
+        min-width: 320px;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 4px;
+    }
+    
+    /* Right Column */
+    .right-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 0;
+        overflow: hidden;
+    }
+    
+    /* Soul Chronicle - Scrollable dengan tinggi fleksibel */
+    .game-log-section {
+        flex: 1.5;
+        min-height: 300px;
+        max-height: 500px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    
+    .log-container {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        min-height: 200px;
+    }
+    
+    /* Command Section - Fixed Height */
+    .command-section {
+        flex: 1;
+        min-height: 200px;
+        max-height: 250px;
+    }
+    
+    /* Quest Section - Fixed Height */
+    .quest-section {
+        flex: 0.8;
+        min-height: 140px;
+        max-height: 160px;
+    }
+    
+    /* Character Canvas Larger */
+    #characterCanvas {
+        width: 128px;
+        height: 128px;
+    }
+    
+    /* Equipment Grid - 3x2 Layout */
+    .equipment-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Show desktop-only elements */
+    .online-status {
+        display: flex;
+    }
+    
+    .footer-center {
+        display: flex;
+    }
+}
+
+/* === GAME HEADER & FOOTER - Tetap di Posisi === */
+.game-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+.game-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+/* === LOADING SCREEN - Perbaikan === */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-darker);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+/* === CHARACTER SECTION - Auto Height === */
+.character-section {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    border: 2px solid var(--primary-purple);
+    box-shadow: var(--glow-purple);
+    flex-shrink: 0;
+}
+
+.character-display {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+/* === EQUIPMENT SECTION - Auto Height === */
+.equipment-section {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    border: 2px solid var(--accent-red);
+    box-shadow: 0 0 15px rgba(255, 118, 117, 0.15);
+    flex-shrink: 0;
+}
+
+/* === GAME LOG - Scroll Container Fix === */
+.log-container {
+    background: var(--bg-dark);
+    border-radius: var(--border-radius-sm);
+    padding: 12px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    border: 1px solid var(--border-color);
+}
+
+.log-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.log-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+    background: var(--primary-purple);
+    border-radius: 3px;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* === COMMAND SECTION - Fixed Height Optimasi === */
+.command-section {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    border: 2px solid var(--accent-yellow);
+    box-shadow: 0 0 15px rgba(255, 234, 167, 0.15);
+    overflow: hidden;
+}
+
+.command-input-group {
+    flex-shrink: 0;
+}
+
+.quick-chips {
+    flex-shrink: 0;
+}
+
+.history-section {
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+/* === QUEST SECTION - Auto Height === */
+.quest-section {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    border: 2px solid var(--accent-green);
+    box-shadow: 0 0 15px rgba(85, 239, 196, 0.15);
+}
+
+/* === LOG ENTRIES - Perbaikan Tampilan === */
+.log-entry {
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    animation: fadeIn 0.3s ease;
+    border-left: 3px solid transparent;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* === EQUIPMENT GRID - Responsif === */
+.equipment-grid {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* Tablet Landscape Optimization */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 1023px) {
+    .game-container {
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .game-area {
+        flex-direction: row;
+    }
+    
+    .left-column {
+        width: 40%;
+        overflow-y: auto;
+    }
+    
+    .right-column {
+        width: 60%;
+    }
+    
+    .game-log-section {
+        max-height: 60vh;
+    }
+    
+    .command-section {
+        max-height: 30vh;
+    }
+    
+    .character-display {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    #characterCanvas {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+/* Large Desktop Screens */
+@media (min-width: 1200px) {
+    .game-container {
+        max-width: 1400px;
+        max-height: 1000px;
+    }
+    
+    .left-column {
+        width: 30%;
+        max-width: 350px;
+    }
+    
+    .right-column {
+        width: 70%;
+    }
+    
+    .game-log-section {
+        max-height: 600px;
+    }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .stat-bar,
+    .progress-bar {
+        height: 2px;
+        border-radius: 1px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .menu-btn,
+    .log-btn,
+    .command-chip,
+    .equip-slot,
+    .footer-btn,
+    .send-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Better touch feedback */
+    .command-chip:active,
+    .equip-slot:active,
+    .menu-item:active {
+        opacity: 0.7;
+        transform: scale(0.95);
+    }
+    
+    /* Prevent text selection on tap */
+    .log-entry,
+    .command-chip,
+    .equip-slot,
+    .menu-item {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .game-header,
+    .command-section,
+    .game-footer {
+        display: none;
+    }
+    
+    .game-container {
+        border: none;
+        box-shadow: none;
+        height: auto;
+    }
+}
